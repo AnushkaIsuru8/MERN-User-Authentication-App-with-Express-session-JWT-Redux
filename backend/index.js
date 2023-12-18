@@ -10,6 +10,8 @@ app.listen(8080, () => {
     console.log('Server Listning')
 })
 
+mongoose.connect('mongodb://localhost:27017/test1')
+
 app.post('/', (req,res) =>{
     res.json(req.body)
 })
