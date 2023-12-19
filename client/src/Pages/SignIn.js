@@ -8,7 +8,7 @@ export default function SignIn() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/', {userName})
+        axios.get('http://localhost:8080/', {userName})
         .then(res => {
             console.log(res)
         }).catch(err => alert(err))
