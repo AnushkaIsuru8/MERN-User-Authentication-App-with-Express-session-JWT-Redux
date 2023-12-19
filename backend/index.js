@@ -10,11 +10,18 @@ app.use(express.json())
 mongoose.connect('mongodb+srv://aianushka24:cFwsktNBq9Ypcyxb@cluster0.2azaf1a.mongodb.net/')
 .then(()=>{
     console.log('db cpneccted')
-    UserModel.create({"username":"sdfsf", "password":'12313123'})
+    //UserModel.create({"username":"sdfsf", "password":'12313123'})
+
+    UserModel.find().then(function (users){
+        console.log(users.length)
+        
+    }).catch(err => {console.log(err)})
+
 }).catch(err =>{console.log(err)})
 
 app.get('/', (req,res) =>{
     UserModel.find().then(function (users){
+        console.log(users)
         res.json(users)
     }).catch(err => {console.log(err)})
 })
