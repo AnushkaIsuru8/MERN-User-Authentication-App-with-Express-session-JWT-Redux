@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const UserModel = require('./Modules/User')
 
@@ -31,6 +32,11 @@ app.get('/', (req,res) =>{
 
 app.listen(8080, () => {
     console.log('Server Listning')
+    const password = "sdfdf"
+    bcrypt.hash(password, 10)
+    .then(hash=>{
+        console.log(hash)
+    })
 })
 
 app.post('/signin', (req,res) =>{
@@ -42,5 +48,10 @@ app.post('/signup', (req,res)=>{
 })
 
 app.post('/signin2', (req,res)=>{
+    const password = "sdfdf"
+    bcrypt.hash(password, 10)
+    .then(hash=>{
+        console.log(hash)
+    })
     res.json("matched")
 })
