@@ -8,11 +8,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(session({
-    secret:"Some secret",
-    cookie:{maxAge:300000},
-    saveUninitialized:false
+    secret: "Some secret",
+    cookie: { maxAge: 300000 },
+    saveUninitialized: false
 }))
-var userPW 
+var userPW
 
 /*mongoose.connect('mongodb+srv://aianushka24:cFwsktNBq9Ypcyxb@cluster0.2azaf1a.mongodb.net/')
 .then(()=>{
@@ -28,40 +28,35 @@ var userPW
 }).catch(err =>{console.log(err)})
 */
 
-app.get('/', (req,res) =>{
+app.get('/', (req, res) => {
     console.log(req)
-    UserModel.find().then(function (users){        
+    UserModel.find().then(function (users) {
         res.json(users)
-    }).catch(err => {console.log(err)})
+    }).catch(err => { console.log(err) })
 })
 
 app.listen(8080, () => {
     console.log('Server Listning')
     const password = "sdfdf"
     bcrypt.hash(password, 10)
-    .then(hash=>{
-        console.log(hash)
-    })
+        .then(hash => {
+            console.log(hash)
+        })
 })
 
-app.post('/signin', (req,res) =>{
-    res.json("old")    
+app.delete('/signin', (req, res) => {
+    res.json("old")
 })
 
-app.get('/signin', (req,res) =>{
-    console.log(req.sessionID )
-    res.json({"name":"sdf"})
-})
-
-app.post('/signup', (req,res)=>{
+app.post('/signup', (req, res) => {
     res.json("created")
 })
 
-app.post('/signin2', (req,res)=>{
+app.post('/signin2', (req, res) => {
     const password = "sdfdf"
     bcrypt.hash(password, 10)
-    .then(hash=>{
-        console.log(hash)
-    })
+        .then(hash => {
+            console.log(hash)
+        })
     res.json("matched")
 })
