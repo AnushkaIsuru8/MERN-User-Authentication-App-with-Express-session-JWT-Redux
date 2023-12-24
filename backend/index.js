@@ -60,3 +60,28 @@ app.post('/signin2', (req, res) => {
         })
     res.json("matched")
 })
+
+//========================================================================session setter
+app.post('/s', (req, res) => {
+    console.log(req.sessionID)
+    const [un, pw] = "123"
+    if (req.session.authenticated) {
+        res.json({ "state": "authenticated" })
+    } else if ("123" == "123") {
+        req.session.authenticated = true
+        req.session.user = {
+            un: un,
+            pw: pw
+        }
+        res.json(req.session)
+    } else {
+        res.json({ "message": "bad" })
+    }
+
+})
+
+//========================================================================session getter
+app.post('/g', (req,res) =>{
+    console.log(req.sessionID)
+    res.json(req.session)
+})
