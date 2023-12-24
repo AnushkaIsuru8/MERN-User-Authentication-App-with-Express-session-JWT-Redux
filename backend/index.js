@@ -3,11 +3,13 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const UserModel = require('./Modules/User')
-
+const session = require('express-session')
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(session)
 var userPW 
+
 /*mongoose.connect('mongodb+srv://aianushka24:cFwsktNBq9Ypcyxb@cluster0.2azaf1a.mongodb.net/')
 .then(()=>{
     console.log('db cpneccted')
@@ -21,11 +23,10 @@ var userPW
 
 }).catch(err =>{console.log(err)})
 */
+
 app.get('/', (req,res) =>{
     console.log(req)
-    UserModel.find().then(function (users){
-        
-        //if(req.body.)
+    UserModel.find().then(function (users){        
         res.json(users)
     }).catch(err => {console.log(err)})
 })
