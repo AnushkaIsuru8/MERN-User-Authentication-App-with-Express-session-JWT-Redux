@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(session({
     secret:"Some secret",
     cookie:{maxAge:300000},
-    saveUninitialized:true
+    saveUninitialized:false
 }))
 var userPW 
 
