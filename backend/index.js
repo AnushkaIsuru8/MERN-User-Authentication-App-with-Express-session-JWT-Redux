@@ -7,7 +7,11 @@ const session = require('express-session')
 const app = express()
 app.use(cors())
 app.use(express.json())
-app.use(session)
+app.use(session({
+    secret:"Some secret",
+    cookie:{maxAge:300000},
+    saveUninitialized:true
+}))
 var userPW 
 
 /*mongoose.connect('mongodb+srv://aianushka24:cFwsktNBq9Ypcyxb@cluster0.2azaf1a.mongodb.net/')
@@ -42,6 +46,11 @@ app.listen(8080, () => {
 
 app.post('/signin', (req,res) =>{
     res.json("old")    
+})
+
+app.get('/signin', (req,res) =>{
+    console.log(req.sessionID )
+    res.json({"name":"sdf"})
 })
 
 app.post('/signup', (req,res)=>{
