@@ -63,7 +63,7 @@ app.post('/signin2', (req, res) => {
 
 //========================================================================session setter
 app.post('/s', (req, res) => {
-    console.log(req.sessionID)
+    
     const [un, pw] = "123"
     if (req.session.authenticated) {
         res.json({ "state": "authenticated" })
@@ -82,6 +82,14 @@ app.post('/s', (req, res) => {
 
 //========================================================================session getter
 app.post('/g', (req,res) =>{
-    console.log(req.sessionID)
-    res.json(req.session)
+    if (req.session.authenticated) {
+        res.json({ "state": "fgdg" })
+    } else {
+        res.json({ "message": "badd" })
+    }
 })
+
+function checkXriden(req){
+    //if (req.session.authenticated = true) return true
+    return false
+} 
