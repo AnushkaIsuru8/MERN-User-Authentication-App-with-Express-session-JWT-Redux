@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const router = require('./routerController')
+const router = require('./userRouter')
 const app = express()
 
 
@@ -12,6 +12,7 @@ mongoose.connect('mongodb://0.0.0.0/test')
 
 
 app.use('/', router)
+
 app.use(express.json())
 
 app.listen(8080, ()=>{
