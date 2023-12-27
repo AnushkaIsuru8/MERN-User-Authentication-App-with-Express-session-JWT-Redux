@@ -5,7 +5,7 @@ const router = require('./routerController')
 const app = express()
 
 
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://0.0.0.0/test')
 .then(()=>{
     console.log('db Connected')
 }).catch(err =>{console.log(err)})
