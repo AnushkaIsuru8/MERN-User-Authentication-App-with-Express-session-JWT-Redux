@@ -4,12 +4,12 @@ const mongoose = require('mongoose')
 const router = require('./routerController')
 const app = express()
 
-/*
-mongoose.connect('mongodb+srv://aianushka24:cFwsktNBq9Ypcyxb@cluster0.2azaf1a.mongodb.net/')
+
+mongoose.connect('mongodb://localhost:27017/test')
 .then(()=>{
-    console.log('db cpneccted')
+    console.log('db Connected')
 }).catch(err =>{console.log(err)})
-*/
+
 
 app.use('/', router)
 app.use(express.json())
