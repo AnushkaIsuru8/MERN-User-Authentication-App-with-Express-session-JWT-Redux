@@ -3,7 +3,6 @@ const User = require('./Modules/User')
 const signUp = async (req, res, next) => {
     
     const { username, password } = req.body;
-    //const username = password = "sdfsf"
     const user = new User({
         username,
         password

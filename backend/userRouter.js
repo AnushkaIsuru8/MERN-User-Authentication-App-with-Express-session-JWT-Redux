@@ -1,16 +1,11 @@
-const express = require('express')
-const router = express.Router()
-
+const express = require("express");
 const {
-    signUp,
-    } = require('./userController')
+  signUp
 
-/*
-router.get('/', (req,res, next)=>{
-    res.send("Hello world")
-})
-*/
+} = require("./userController");
 
-router.post('/signup', signUp);
+const router = express.Router();
 
-module.exports = router
+router.post("/signup", signUp);
+
+module.exports = router;
