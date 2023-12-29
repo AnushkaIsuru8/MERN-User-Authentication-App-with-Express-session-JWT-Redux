@@ -1,7 +1,9 @@
 const User = require('./Modules/User')
 
 const signUp = async (req, res, next) => {
-    const [username, Password] = req.body
+    
+    const { username, password } = req.body;
+    //const username = password = "sdfsf"
     const user = new User({
         username,
         password
@@ -16,4 +18,4 @@ const signUp = async (req, res, next) => {
     return res.status(201).json({message:"SAVED "})
 }
 
-exports.signUp
+exports.signUp = signUp
