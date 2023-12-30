@@ -1,5 +1,6 @@
 const User = require('./Modules/User')
 const bcrypt = require('bcrypt')
+
 const signUp = async (req, res, next) => {
 
     const { username, password } = req.body;

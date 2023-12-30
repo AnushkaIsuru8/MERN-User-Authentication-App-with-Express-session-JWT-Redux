@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const router = require('./userRouter')
+require('dotenv').config()
 
 const app = express()
 
@@ -17,4 +18,5 @@ mongoose.connect('mongodb://0.0.0.0/test')
 
 app.listen(8080, ()=>{
     console.log("Listning")
+    console.log(process.env.FRONTEND_URL)
 })
