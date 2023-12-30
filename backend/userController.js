@@ -1,5 +1,6 @@
 const User = require('./Modules/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const signUp = async (req, res, next) => {
 
@@ -28,8 +29,8 @@ const signUp = async (req, res, next) => {
     } catch (err) {
         console.log(err)
     }
-
-    return res.status(201).json({ message: "SAVED " })
+    const token = jwt.sign({id : username}, process.env.JWT_SECRET_KEY, {expiresIn : "2 days"})
+    return res.status(201).json({ message: "SAVED " , token})
 }
 
 exports.signUp = signUp
