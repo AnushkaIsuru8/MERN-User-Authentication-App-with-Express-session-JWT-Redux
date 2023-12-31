@@ -33,4 +33,10 @@ const signUp = async (req, res, next) => {
     return res.status(201).json({ message: "SAVED " , token})
 }
 
+const verifyToken = (req, res, next) => {
+    const headers = req.headers['authorization']
+    console.log(headers)
+}
+
 exports.signUp = signUp
+exports.verifyToken = verifyToken

@@ -18,5 +18,4 @@ mongoose.connect('mongodb://0.0.0.0/test')
 
 app.listen(8080, ()=>{
     console.log("Listning")
-    console.log(process.env.FRONTEND_URL)
 })
