@@ -29,7 +29,17 @@ const signUp = async (req, res, next) => {
     } catch (err) {
         console.log(err)
     }
+
     const token = jwt.sign({ id: username }, process.env.JWT_SECRET_KEY, { expiresIn: "2 days" })
+
+    res.cookie(String(username), token, {
+        path:"/",
+        expires: new Date(Date.now() + 1000 * 10),
+        httpOnly: true,
+        sameSite : "lax",
+        Secure: true
+    })
+
     return res.status(201).json({ message: "SAVED ", token })
 }
 
