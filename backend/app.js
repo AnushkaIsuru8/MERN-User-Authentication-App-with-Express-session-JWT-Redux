@@ -11,7 +11,7 @@ app.use(express.json())
 
 app.use('/api', router)
 
-mongoose.connect('mongodb://0.0.0.0/test')
+mongoose.connect(process.env.MONGODB_CONNECTIN_STRING)
 .then(()=>{
     console.log('db Connected')
 }).catch(err =>{console.log(err)})
