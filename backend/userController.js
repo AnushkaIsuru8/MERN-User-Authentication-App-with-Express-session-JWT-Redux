@@ -34,7 +34,7 @@ const signUp = async (req, res, next) => {
 
     res.cookie(String(username), token, {
         path:"/",
-        expires: new Date(Date.now() + 1000 * 10),
+        expires: new Date(Date.now() + 1000 * 1800),
         httpOnly: true,
         sameSite : "lax",
         Secure: true
@@ -44,7 +44,8 @@ const signUp = async (req, res, next) => {
 }
 
 const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'].split(" ")[1]
+    const cookies = req.headers.cookie
+    const token = cookies.split("=")[1]
 
     if (!token) {
         return res.status(404).json({ message: "No token found" })
