@@ -84,9 +84,15 @@ const loginSuccessfull = async (req, res, next) => {
 }
 
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.cookie.split("userID=")[1]
-  if (!token) {
-    return res.status(404).json({ message: "No token found" })
+  let token
+  try {
+    token = req.headers.cookie.split("userID=")[1]
+  } catch (err) {
+
+  }
+
+  if (!token || !req.session.loggedUserID) {
+    return res.status(404).json({ message: "Unauthorised" })
   }
 
   jwt.verify(String(token), process.env.JWT_SECRET_KEY, (err, user) => {
@@ -135,9 +141,16 @@ const refreshAuth = async (req, res, next) => {
     expires: new Date(Date.now() + 1000 * 3600),
     sameSite: "lax"
   })
-  
-  req.session.cookie.expires = new Date(req.session.cookie.expires.getTime() + 3600 * 1000) 
+
+  req.session.cookie.expires = new Date(req.session.cookie.expires.getTime() + 3600 * 1000)
   return res.status(202).json({ message: "Auth refreshed" })
+}
+const logout = (req, res, next) => {
+  res.clearCookie("userID")
+  res.clearCookie("connect.sid");
+  req.session = null
+
+  res.status(202).json({ message: "Logout" })
 }
 
 const clearCookie2 = async (req, res, next) => {
@@ -152,4 +165,5 @@ exports.loginSuccessfull = loginSuccessfull
 exports.verifyToken = verifyToken
 exports.getUser = getUser
 exports.refreshAuth = refreshAuth
+exports.logout = logout
 exports.clearCookie2 = clearCookie2
