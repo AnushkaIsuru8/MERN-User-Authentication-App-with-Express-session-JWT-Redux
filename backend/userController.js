@@ -67,18 +67,20 @@ const loginSuccessfull = async (req, res, next) => {
       id: userID
     }, process.env.JWT_SECRET_KEY,
     {
-      expiresIn: "60s"
+      expiresIn: "3600s"
     }
   );
 
   res.cookie("userID", token, {
     path: "/",
     httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 60),
+    expires: new Date(Date.now() + 1000 * 3600),
     sameSite: "lax"
   })
 
-  return res.status(200).json({ message: "Login Successfull" })
+  //return res.status(200).json({ message: "Login Successfull" })
+  req.id = userID
+  next()
 }
 
 const verifyToken = async (req, res, next) => {
@@ -113,8 +115,29 @@ const getUser = async (req, res, next) => {
       userId: user._id
     })
   } else {
-    return res.status(401).json({ message: "Invalid" })
+    return res.status(401).json({ message: "Unauthorized" })
   }
+}
+
+const refreshAuth = async (req, res, next) => {
+  const token = jwt.sign(
+    {
+      id: req.id
+    }, process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: "3600s"
+    }
+  );
+
+  res.cookie("userID", token, {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 3600),
+    sameSite: "lax"
+  })
+  
+  req.session.cookie.expires = new Date(req.session.cookie.expires.getTime() + 3600 * 1000) 
+  return res.status(202).json({ message: "Auth refreshed" })
 }
 
 const clearCookie2 = async (req, res, next) => {
@@ -128,4 +151,5 @@ exports.login = login;
 exports.loginSuccessfull = loginSuccessfull
 exports.verifyToken = verifyToken
 exports.getUser = getUser
+exports.refreshAuth = refreshAuth
 exports.clearCookie2 = clearCookie2

@@ -16,7 +16,7 @@ app.use(session({
     resave: true,
     cookie: {
         httpOnly: true,
-        maxAge: 600 * 1000 //Sesstion valid time in mili seconds 
+        maxAge: 300 * 1000 //Sesstion valid time in mili seconds 
     },
 }))
 
