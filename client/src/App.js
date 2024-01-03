@@ -1,7 +1,7 @@
-import SignIn from "./Pages/SignIn";
-import SignIn2 from "./Pages/SignIn2";
-import SignUp from "./Pages/SignUp";
-import Admin from "./Pages/Admin";
+import EnterUsername from "./Pages/EnterUsername";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Welcome from "./Pages/Welcome";
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
@@ -26,10 +26,10 @@ function App() {
 
         </ul>
         <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/SignIn2" element={<SignIn2 />} {...user}/>
-          <Route path="Signup" element={<SignUp />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/" element={<EnterUsername />} />
+          <Route path="/login" element={<Login />} {...user}/>
+          <Route path="Register" element={<Register />} />
+          <Route path="/Welcome" element={<Welcome />} />
         </Routes>
       </BrowserRouter>
     </div>
