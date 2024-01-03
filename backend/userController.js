@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
     req.session.loggedUserID = String(newUser._id)
     next()
   } else {
-    return res.status(401).json({ message: "Expired" })
+    return res.status(401).json({ message: "Unauthorized" })
   }
 
 }
@@ -92,7 +92,7 @@ const verifyToken = async (req, res, next) => {
   }
 
   if (!token || !req.session.loggedUserID) {
-    return res.status(404).json({ message: "Unauthorised" })
+    return res.status(401).json({ message: "Unauthorised" })
   }
 
   jwt.verify(String(token), process.env.JWT_SECRET_KEY, (err, user) => {
