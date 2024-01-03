@@ -18,7 +18,7 @@ const setUsername = async (req, res, next) => {
     return res.status(200).json({ message: "Already Registerd" });
   }
 
-  return res.status(201).json({ message: "to Register" });
+  return res.status(201).json({ message: "to register" });
 };
 
 const register = async (req, res, next) => {
@@ -28,102 +28,60 @@ const register = async (req, res, next) => {
     const { password } = req.body
     const hashedPassword = bcrypt.hashSync(password, 10)
 
-    const newUser = new User({
-      username,
-      password: hashedPassword
-    })
-
-    // const asdf =  await User.create({username, password})
-    // console.log(String(asdf._id))
-
-    await User.create({ username, password }).then((err, result) => {
-
-      const token = jwt.sign(
-        {
-          id: username
-        }, process.env.JWT_SECRET_KEY,
-        {
-          expiresIn: "2s"
-        }
-      );
-
-      res.cookie(String(username), token, {
-        path: "/",
-        expires: new Date(Date.now() + 1000 * 3600),
-        httpOnly: true,
-        sameSite: "lax"
-      })
-
-      return res.status(201).json({ message: "Account Created" })
-    })
+    const newUser = await User.create({ username, password: hashedPassword })
+    req.session.loggedUserID = String(newUser._id)
+    next()
   } else {
-    return res.status(401).json({ message: "sdf" })
+    return res.status(401).json({ message: "Expired" })
   }
 
 }
 
-const login = async (req, res, next) => {  
+const login = async (req, res, next) => {
   let username = req.session.username
   if (username) {
     const { password } = req.body
 
     const matchedUser = await User.findOne({ username })
+
     const isPasswordCorrect = bcrypt.compareSync(password, matchedUser.password);
 
     if (isPasswordCorrect) {
+      req.session.loggedUserID = String(matchedUser._id)
       next()
     } else {
-      return res.status(204).json({ message: "" })
+      return res.status(204).json({ message: "Password not matched" })
     }
 
   } else {
-    return res.status(401).json({ message: "" })
+    return res.status(401).json({ message: "Expired" })
   }
 }
 
 const loginSuccessfull = async (req, res, next) => {
-  let username = req.session.username
+  req.session.username = ""
+  req.session.cookie.expires = new Date(Date.now() + 3600 * 1000 * 24)
+  let userID = req.session.loggedUserID
   const token = jwt.sign(
     {
-      id: username
+      id: userID
     }, process.env.JWT_SECRET_KEY,
     {
-      expiresIn:"1s"
+      expiresIn: "60s"
     }
   );
 
-  res.cookie(String(username), token, {
+  res.cookie(userID, token, {
     path: "/",
     httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 3600),
+    expires: new Date(Date.now() + 1000 * 60),
     sameSite: "lax"
   })
 
-  return res.status(200).json({ message: "" })
+  return res.status(200).json({ message: "Login Successfull" })
 }
-
-const verifyToken = async (req, res, next) => {
-  const token = req.headers.cookie.split(req.session.username + "=")[1]
-  console.log(req.headers.cookie)
-  if (!token) {
-    res.status(404).json({ message: "No token found" })
-  }
-
-  jwt.verify(String(token), process.env.JWT_SECRET_KEY, (err, user) => {
-    if (err) {
-      //console.log(err)
-      return res.status(400).json({ message: "Invalid token" })
-    }
-    console.log(user.id)
-    req.id = user.id
-  })
-
-  next()
-}
-
 
 exports.setUsername = setUsername;
 exports.register = register;
 exports.login = login;
-exports.verifyToken = verifyToken
 exports.loginSuccessfull = loginSuccessfull

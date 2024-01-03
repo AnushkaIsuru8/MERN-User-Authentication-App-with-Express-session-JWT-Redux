@@ -12,8 +12,12 @@ app.use(cors())
 app.use(express.json())
 app.use(session({
     secret: "Some secret",
-    cookie: { maxAge: 30000 },
-    saveUninitialized: false
+    saveUninitialized: false,
+    resave: true,
+    cookie: {
+        httpOnly: true,
+        maxAge: 600 * 1000 //Sesstion valid time in mili seconds 
+    },
 }))
 
 app.use(cookieParser())
@@ -23,11 +27,11 @@ app.use(express.json())
 app.use('/', router)
 
 mongoose.connect(process.env.MONGODB_CONNECTIN_STRING)
-.then(()=>{
-    app.listen(5000, ()=>{
-        console.log("Server Listning on PORT 5000")
-    })
-    
-}).catch(err =>{console.log(err)})
+    .then(() => {
+        app.listen(5000, () => {
+            console.log("Server Listning on PORT 5000")
+        })
+
+    }).catch(err => { console.log(err) })
 
 
