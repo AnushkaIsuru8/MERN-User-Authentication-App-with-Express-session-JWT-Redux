@@ -11,7 +11,7 @@ export default function Register() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:5000/register', { "textInput": textInput })
+        axios.post('http://localhost:5000/register', { "password": textInput })
             .then(res => {
                 if (202 === res.status) {
                     serFormState(1)

@@ -3,19 +3,19 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 
-export default function SignIn2() {
+export default function Login() {
     const navigate = useNavigate()
     const [textInput, settextInput] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/signin2', {textInput})
+        axios.post('http://localhost:5000/login', {"password":textInput})
         .then(res => {
-            if ("matched" === res.data) {
-                navigate('/admin')             
+            if (202=== res.status) {
+                navigate('/welcome')             
             } 
-            else if ("notMatched" === res.data) {
+            else if (204 === res.status) {
                 alert("Password Not matched. Try again")
             } else {
                 alert("Something went wrong")
