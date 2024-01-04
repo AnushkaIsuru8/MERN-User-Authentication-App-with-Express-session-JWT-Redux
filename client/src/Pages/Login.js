@@ -1,10 +1,13 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-
+import { useDispatch, useSelector } from "react-redux"
 
 export default function Login() {
     const navigate = useNavigate()
+const isLoggedIn = useSelector(state => state.isLoggedIn)
+
+    const dispatch = useDispatch()
     const [textInput, settextInput] = useState('')
 
     const handleSubmit = (e) => {
@@ -13,6 +16,7 @@ export default function Login() {
         axios.post('http://localhost:5000/login', {"password":textInput})
         .then(res => {
             if (202=== res.status) {
+                dispatch(authActions.Login())
                 navigate('/welcome')             
             } 
             else if (204 === res.status) {

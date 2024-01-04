@@ -4,32 +4,52 @@ import Register from "./Pages/Register";
 import Welcome from "./Pages/Welcome";
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
-
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "./store";
+//axios.defaults.withCredentials = true
 function App() {
-  const [user, setUser] = useState(false)
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector(state => state.isLoggedIn)
+  const sendLogoutReq = async () => {
+    const res = await axios.post("http://localhost:5000/logout", {}, {
+     // withCredentials: true
+    })
+
+    if (res.status = 202) {
+      return res
+    }
+    return new Error("Unable to logout")
+  }
+
+  const handleLogout = () => {
+    sendLogoutReq().then(() => {
+      dispatch(authActions.logout())
+    })
+  }
   return (
     <div className="App">
       <BrowserRouter>
         <ul>
           {
-            user ?
+            isLoggedIn ?
               <li>
-                <Link to="/admin">Admin</Link>
+                <button onClick={handleLogout}>Logout</button>
               </li>
               : <></>
           }
 
           <li>
-            <Link to="/">Homw</Link>
+            <Link to="/">Home</Link>
           </li>
 
         </ul>
         <Routes>
           <Route path="/" element={<EnterUsername />} />
-          <Route path="/login" element={<Login />} {...user}/>
+          <Route path="/login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
-          <Route path="/Welcome" element={<Welcome />} />
+          {isLoggedIn &&
+            <Route path="/Welcome" element={<Welcome />} />}
         </Routes>
       </BrowserRouter>
     </div>
