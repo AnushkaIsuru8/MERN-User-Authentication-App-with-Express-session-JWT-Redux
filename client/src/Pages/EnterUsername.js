@@ -10,13 +10,12 @@ export default function EnterUsername() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/signin', { "userName": userName })
+        axios.post('http://localhost:5000/setUsername', { "username": userName })
             .then(res => {
-                if ("new" === res.data) {
-                    navigate('/signup')
-                    window.location.href = "/signup"
-                } else if ("old" === res.data) {
-                    navigate('/signin2')
+                if (201 === res.status) {
+                    navigate('/register')                   
+                } else if (200 === res.status) {
+                    navigate('/login')
                 } else {
                     alert("Something wend wrong")
                 }
@@ -25,7 +24,8 @@ export default function EnterUsername() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input value={userName} onInput={(e) => { setUserName(e.target.value) }} placeholder="username"/>
+            <h1>Enter Username</h1>
+            <input value={userName} onInput={(e) => { setUserName(e.target.value) }} placeholder="username" />
             <button >NEXT</button>
         </form>
     )

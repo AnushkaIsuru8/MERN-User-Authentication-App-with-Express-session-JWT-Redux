@@ -11,12 +11,12 @@ export default function Register() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/signup', { "textInput": textInput })
+        axios.post('http://localhost:5000/register', { "textInput": textInput })
             .then(res => {
-                if ("created" === res.data) {
+                if (202 === res.status) {
                     serFormState(1)
                     setTimeout(() => {
-                        navigate('/admin')
+                        navigate('/welcome')
                     }, 3000)
                 } else {
                     alert("Something wend wrong")
