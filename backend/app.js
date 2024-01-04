@@ -9,8 +9,9 @@ require('dotenv').config()
 const app = express()
 
 app.use(cors({
-    credentials:true,
-    origin: "http://localhost:3000"
+    credentials: true,
+    origin: "http://localhost:3000",
+    secure: true,
 }))
 app.use(express.json())
 app.use(session({

@@ -14,7 +14,7 @@ const setUsername = async (req, res, next) => {
   }
 
   req.session.username = username;
-console.log(alreadySaved)
+  console.log(req.session)
   if (alreadySaved) {
     return res.status(200).json({ message: "Already Registerd" });
   }
@@ -23,8 +23,9 @@ console.log(alreadySaved)
 };
 
 const register = async (req, res, next) => {
+
   let username = req.session.username
-console.log(username)
+console.log(req.session)
   if (username) {
     const { password } = req.body
     const hashedPassword = bcrypt.hashSync(password, 10)
