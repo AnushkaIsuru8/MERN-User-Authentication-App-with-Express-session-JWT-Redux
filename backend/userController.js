@@ -7,13 +7,14 @@ const setUsername = async (req, res, next) => {
 
   let alreadySaved;
   try {
-    alreadySaved = await User.findOne({ username: username });
+    alreadySaved = await User.findOne({ "username": username });
   } catch (err) {
     console.log(err);
+    return res.status(400).json({message : "Bad Request"})
   }
 
   req.session.username = username;
-
+console.log(alreadySaved)
   if (alreadySaved) {
     return res.status(200).json({ message: "Already Registerd" });
   }
@@ -23,7 +24,7 @@ const setUsername = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   let username = req.session.username
-
+console.log(username)
   if (username) {
     const { password } = req.body
     const hashedPassword = bcrypt.hashSync(password, 10)
@@ -54,12 +55,12 @@ const login = async (req, res, next) => {
     }
 
   } else {
-    return res.status(401).json({ message: "Expired" })
+    return res.status(401).json({ message: "Unauthorized" })
   }
 }
 
 const loginSuccessfull = async (req, res, next) => {
-  req.session.username = ""
+  req.session.username = null
   req.session.cookie.expires = new Date(Date.now() + 3600 * 1000 * 24)
   let userID = req.session.loggedUserID
   const token = jwt.sign(
