@@ -11,8 +11,8 @@ export default function EnterUsername() {
         e.preventDefault()
 
         axios.post('http://localhost:5000/setUsername',
-            { "username": userName },{}
-           )
+            { "username": userName }
+        )
             .then(res => {
                 if (201 === res.status) {
                     navigate('/register')

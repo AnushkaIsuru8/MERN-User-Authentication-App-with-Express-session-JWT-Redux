@@ -7,23 +7,29 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store";
-axios.defaults.withCredentials  = true
+
+axios.defaults.withCredentials = true
+
 function App() {
+
   const dispatch = useDispatch()
+
   const isLoggedIn = useSelector(state => state.isLoggedIn)
 
   const sendLogoutReq = async () => {
     const res = await axios.post("http://localhost:5000/logout", {},)
 
-    if (res.status = 202) {
+    if (res.status === 202) {
       return res
     }
+
     return new Error("Unable to logout")
   }
 
   const handleLogout = () => {
     sendLogoutReq().then(() => {
       dispatch(authActions.logout())
+      window.location.href = '/'
     })
   }
   return (
