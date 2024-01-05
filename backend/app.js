@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const router = require('./userRouter')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const mongoDBSession = require('connect-mongodb-session')(session)
 require('dotenv').config()
 
 const app = express()
@@ -12,12 +13,19 @@ app.use(cors({
     credentials: true,
     origin: "http://localhost:3000",
     secure: true,
+    
 }))
 app.use(express.json())
+
+const store = new mongoDBSession({
+    uri:process.env.MONGODB_CONNECTIN_STRING,
+    collection : "Sessions"
+})
 app.use(session({
     secret: "Some secret",
     saveUninitialized: false,
-    resave: true,
+    resave: false,
+    store:store,
     cookie: {
         httpOnly: true,
         maxAge: 300 * 1000 //Sesstion valid time in mili seconds 
