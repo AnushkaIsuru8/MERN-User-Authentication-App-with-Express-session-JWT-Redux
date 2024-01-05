@@ -14,7 +14,7 @@ const setUsername = async (req, res, next) => {
   }
 
   req.session.username = username;
-  console.log(req.session)
+
   if (alreadySaved) {
     return res.status(200).json({ message: "Already Registerd" });
   }
@@ -23,9 +23,8 @@ const setUsername = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-
   let username = req.session.username
-console.log(req.session)
+
   if (username) {
     const { password } = req.body
     const hashedPassword = bcrypt.hashSync(password, 10)
@@ -36,16 +35,13 @@ console.log(req.session)
   } else {
     return res.status(401).json({ message: "Unauthorized" })
   }
-
 }
 
 const login = async (req, res, next) => {
   let username = req.session.username
   if (username) {
     const { password } = req.body
-
     const matchedUser = await User.findOne({ username })
-
     const isPasswordCorrect = bcrypt.compareSync(password, matchedUser.password);
 
     if (isPasswordCorrect) {
@@ -63,6 +59,7 @@ const login = async (req, res, next) => {
 const loginSuccessfull = async (req, res, next) => {
   req.session.username = null
   req.session.cookie.expires = new Date(Date.now() + 3600 * 1000 * 24)
+
   let userID = req.session.loggedUserID
   const token = jwt.sign(
     {
@@ -79,8 +76,6 @@ const loginSuccessfull = async (req, res, next) => {
     expires: new Date(Date.now() + 1000 * 3600),
     sameSite: "lax"
   })
-
-  //return res.status(200).json({ message: "Login Successfull" })
   req.id = userID
   next()
 }
@@ -147,6 +142,7 @@ const refreshAuth = async (req, res, next) => {
   req.session.cookie.expires = new Date(req.session.cookie.expires.getTime() + 3600 * 1000)
   return res.status(202).json({ message: "Auth refreshed" })
 }
+
 const logout = (req, res, next) => {
   res.clearCookie("userID")
   res.clearCookie("connect.sid");
@@ -159,6 +155,7 @@ const clearCookie2 = async (req, res, next) => {
   //res.clearCookie("connect.sid");
   return res.status(200).json({ message: "clear" })
 }
+
 
 exports.setUsername = setUsername;
 exports.register = register;

@@ -9,7 +9,6 @@ const {
   refreshAuth,
   logout,
   clearCookie2
-
 } = require("./userController");
 
 const router = express.Router();
