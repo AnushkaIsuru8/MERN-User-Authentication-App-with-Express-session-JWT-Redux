@@ -1,12 +1,15 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { authActions } from "../store"
 
 export default function Register() {
 
     const [textInput, setTextInput] = useState('asdf')
     const [formState, serFormState] = useState(0)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,7 +19,9 @@ export default function Register() {
             .then(res => {
                 if (202 === res.status) {
                     serFormState(1)
+                    dispatch(authActions.login())
                     setTimeout(() => {
+
                         navigate('/welcome')
                     }, 3000)
                 } else {
@@ -28,7 +33,7 @@ export default function Register() {
     return (
         <>
             {
-                formState ? <h1>Acount created<br/> You will redirect to admin</h1>
+                formState ? <h1>Acount created<br /> You will redirect to admin</h1>
                     :
                     <form onSubmit={handleSubmit}>
                         <h1>password for create new Account</h1>
