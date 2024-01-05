@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom"
 
 export default function Register() {
 
-    const [textInput, setTextInput] = useState('')
+    const [textInput, setTextInput] = useState('asdf')
     const [formState, serFormState] = useState(0)
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:5000/register', { "password": textInput },
+        axios.post('http://localhost:5000/register', { "password": textInput }
         )
             .then(res => {
                 if (202 === res.status) {
@@ -22,13 +22,13 @@ export default function Register() {
                 } else {
                     alert("Something wend wrong")
                 }
-            }).catch(err => alert(err))
+            }).catch(err => console.log(err))
     }
 
     return (
         <>
             {
-                formState ? <h1>Acount createRenderer. u will redirect to admin</h1>
+                formState ? <h1>Acount created<br/> You will redirect to admin</h1>
                     :
                     <form onSubmit={handleSubmit}>
                         <h1>password for create new Account</h1>
