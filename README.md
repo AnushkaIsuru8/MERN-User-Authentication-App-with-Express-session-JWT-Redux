@@ -1,8 +1,13 @@
-# MERN Authentication App with Sessiion, Redux
+# MERN Authentication App with Session, Redux
 
 ## 🤔 Overview
 
 This is a full-stack MERN (MongoDB, Express.js, React, Node.js) authentication app. It provides user registration, login, and logout functionalities with JSON Web Token (JWT), Expresse-Session and Redux.
+
+- **Backend:**
+
+- **Frontend:**
+
 
 ## Features
 
@@ -33,22 +38,22 @@ This is a full-stack MERN (MongoDB, Express.js, React, Node.js) authentication a
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/mern-authentication-app.git
+    git clone https://github.com/your-username/mern-authentication-app.git
    ```
-
+2. **Install Packageous:**
   ```bash
-  cd backend
+    cd backend
   ```
   ```bash
-  npm install
+    npm install
   ```
 
   ```bash
-  cd ../client
+    cd ../client
   ```
   
   ```bash
-  npm install
+    npm install
   ```
 
 
@@ -77,3 +82,17 @@ This is a full-stack MERN (MongoDB, Express.js, React, Node.js) authentication a
 <p align="center">
   <img width="70%"  src="/README/Protected Rout.png" alt="Protected Rout">
 </p>
+
+## How fix errors
+
+### MongoDB Connection Error
+
+Solution is change connection String to "mongodb://0.0.0.0/test"
+**Before fix:**
+```javasricpt
+mongoose.connect('mongodb://localhost:27017/test')
+```
+**After fix:**
+```javasricpt
+mongodb://0.0.0.0/test
+```
