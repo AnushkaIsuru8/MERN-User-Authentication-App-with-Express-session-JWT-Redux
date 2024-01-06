@@ -41,7 +41,7 @@ This is a full-stack MERN authentication  app. It provides user registration, lo
 
 1. **Clone the repository:**
    ```bash
-    git clone https://github.com/your-username/mern-authentication-app.git
+    git clone https://github.com/AnushkaIsuru8/MERN-User-Authentication-App-with-Express-session-JWT-Redux.git
    ```
 2. **Install Packageous:**
     ```bash
