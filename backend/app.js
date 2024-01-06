@@ -34,7 +34,6 @@ app.use(session({
 }))
 
 app.use(cookieParser())
-app.use(express.json())
 
 app.use('/', router)
 
