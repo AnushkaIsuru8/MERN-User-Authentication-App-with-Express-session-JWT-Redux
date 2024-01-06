@@ -19,7 +19,7 @@ This is a full-stack MERN authentication  app. It provides user registration, lo
 
 - ### Frontend:
   - **1. React**
-  - **2.  Router Dom =** for navigation
+  - **2. React Router Dom** for navigation
   - **3. Axios** for API requests
   - **4. Reduc** for store auth
 
