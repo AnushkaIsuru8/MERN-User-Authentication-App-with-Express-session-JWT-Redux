@@ -151,12 +151,6 @@ const logout = (req, res, next) => {
   res.status(202).json({ message: "Logout" })
 }
 
-const clearCookie2 = async (req, res, next) => {
-  //res.clearCookie("connect.sid");
-  return res.status(200).json({ message: "clear" })
-}
-
-
 exports.setUsername = setUsername;
 exports.register = register;
 exports.login = login;
@@ -165,4 +159,3 @@ exports.verifyToken = verifyToken
 exports.getUser = getUser
 exports.refreshAuth = refreshAuth
 exports.logout = logout
-exports.clearCookie2 = clearCookie2
